@@ -17,6 +17,8 @@ import Data.Time.Clock (UTCTime)
 import Data.Time.Format (defaultTimeLocale, iso8601DateFormat, parseTimeM)
 
 type Token = String
+type Auth0M m r e = (MonadIO m, MonadError e m, MonadReader r m, AsHttpError e, HasHttpCfg r, HasAuth0 r)
+
 
 data Auth0 = Auth0 {
     _auth0Application :: String,
