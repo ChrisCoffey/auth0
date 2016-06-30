@@ -7,7 +7,8 @@ module Web.Auth0.Management(
     getUser,
     createEmailUser,
     setEmail,
-    setPhone
+    setPhone,
+    setAppMetadata,
 ) where
 
 import Web.Auth0.Types
