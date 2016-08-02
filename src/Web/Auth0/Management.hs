@@ -6,6 +6,7 @@ module Web.Auth0.Management(
     searchUsers,
     getUser,
     createEmailUser,
+    blockUser,
     setEmail,
     setPhone,
     setAppMetadata,
@@ -47,6 +48,11 @@ setPhone :: (Auth0M m r e, FromJSON a, FromJSON b) => String -> String -> m (Pro
 setPhone uid phone = do
     let dta = mkJSONData $ object ["phone_number" .= phone, "verify_phone_number" .= False, "phone_verified" .= True]
     httpJSON =<< a0Req pATCH ("api/v2/users/"++uid) dta
+
+blockUser :: (Auth0M m r e, FromJSON a, FromJSON b) => String -> m (Profile' a b)
+blockUser uid = 
+    httpJSON =<< a0Req pATCH ("api/v2/users/"++uid) dta
+    where dta = mkJSONData $ object ["blocked" .= True] 
 
 setAppMetadata :: (Auth0M m r e, ToJSON d, FromJSON a, FromJSON b) => String -> d -> m (Profile' a b)
 setAppMetadata uid metaData = do
